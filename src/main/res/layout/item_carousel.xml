@@ -7,7 +7,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCarousel"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
