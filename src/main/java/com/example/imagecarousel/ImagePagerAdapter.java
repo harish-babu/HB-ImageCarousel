@@ -41,10 +41,10 @@ public class ImagePagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.item_image, container, false);
 
         ImageView imageView = view.findViewById(R.id.imageView);
-        TextView description = view.findViewById(R.id.description);
+//        /TextView description = view.findViewById(R.id.description);
 
         Picasso.get().load(imageModelList.get(position).getImageUrl()).into(imageView);
-        description.setText(imageModelList.get(position).getDescription());
+//        description.setText(imageModelList.get(position).getDescription());
 
         container.addView(view, 0);
         return view;

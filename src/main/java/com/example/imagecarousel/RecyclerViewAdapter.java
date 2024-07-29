@@ -1,14 +1,11 @@
 package com.example.imagecarousel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -60,19 +57,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public class CarouselViewHolder extends RecyclerView.ViewHolder {
-        ViewPager viewPager;
-        DotsIndicator dotsIndicator;
+        RecyclerView recyclerView;
 
         public CarouselViewHolder(@NonNull View itemView) {
             super(itemView);
-            viewPager = itemView.findViewById(R.id.viewPager);
-            dotsIndicator = itemView.findViewById(R.id.dotsIndicator);
+            recyclerView = itemView.findViewById(R.id.recyclerViewCarousel);
         }
 
         public void bind(List<ImageModel> carouselItems) {
-            ImagePagerAdapter adapter = new ImagePagerAdapter(context, carouselItems);
-            viewPager.setAdapter(adapter);
-            dotsIndicator.setViewPager(viewPager);
+            CarouselAdapter adapter = new CarouselAdapter(context, carouselItems);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+            recyclerView.addItemDecoration(new DotIndicatorDecoration(context));
         }
     }
 
