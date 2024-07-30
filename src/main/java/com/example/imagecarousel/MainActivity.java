@@ -57,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Add carousel items
         List<ImageModel> carouselItems = new ArrayList<>();
-        carouselItems.add(new ImageModel("https://picsum.photos/id/12/600", ""));
-        carouselItems.add(new ImageModel("https://picsum.photos/id/16/600", ""));
-        carouselItems.add(new ImageModel("https://picsum.photos/id/18/600", ""));
+        carouselItems.add(new ImageModel("https://picsum.photos/id/12/600/800", ""));
+        carouselItems.add(new ImageModel("https://picsum.photos/id/16/600/800", ""));
+        carouselItems.add(new ImageModel("https://picsum.photos/id/18/600/800", ""));
+        carouselItems.add(new ImageModel("https://picsum.photos/id/20/600/800", ""));
+        carouselItems.add(new ImageModel("https://picsum.photos/id/22/600/800", ""));
         items.add(carouselItems);
 
         // Add other items

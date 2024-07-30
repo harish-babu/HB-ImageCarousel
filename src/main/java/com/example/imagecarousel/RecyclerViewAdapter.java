@@ -1,12 +1,7 @@
 package com.example.imagecarousel;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+
+
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -81,14 +76,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
 
-            // Add PagerSnapHelper for snapping behavior
-            PagerSnapHelper snapHelper = new PagerSnapHelper();
+            // Add LinearSnapHelper for snapping behavior
+            LinearSnapHelper snapHelper = new LinearSnapHelper();
             snapHelper.attachToRecyclerView(recyclerView);
 
             // Add the dot indicator decoration
             recyclerView.addItemDecoration(new DotIndicatorDecoration(context));
+            // Add item decoration for spacing
+            int space = 25; // Adjust this value to set the desired space between items
+            recyclerView.addItemDecoration(new ImageSpacerItemDecoration(space));
 
-            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     recyclerView.invalidateItemDecorations();
