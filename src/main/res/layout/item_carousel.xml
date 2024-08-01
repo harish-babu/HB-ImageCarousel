@@ -7,7 +7,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCarousel"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:paddingTop="16dp"

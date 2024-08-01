@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
@@ -48,7 +47,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        AspectRatioImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

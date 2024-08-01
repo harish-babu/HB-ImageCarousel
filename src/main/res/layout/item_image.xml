@@ -7,9 +7,9 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="0dp">
 
-    <ImageView
+    <com.example.imagecarousel.AspectRatioImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop" />
 </androidx.cardview.widget.CardView>
