@@ -15,9 +15,17 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
     private List<ImageModel> items;
     private int screenWidth;
 
-    public CarouselAdapter(Context context, List<ImageModel> items) {
+    public ImpressionTracker getImpressionTracker() {
+        return impressionTracker;
+    }
+
+    private ImpressionTracker impressionTracker;
+
+
+    public CarouselAdapter(Context context, List<ImageModel> items, ImpressionTracker impressionTracker) {
         this.context = context;
         this.items = items;
+        this.impressionTracker = impressionTracker;
         this.screenWidth = context.getResources().getDisplayMetrics().widthPixels;
     }
 

@@ -3,6 +3,7 @@ package com.example.imagecarousel;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_CAROUSEL = 0;
@@ -71,7 +73,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bind(List<ImageModel> carouselItems) {
-            CarouselAdapter adapter = new CarouselAdapter(context, carouselItems);
+            CarouselAdapter adapter = new CarouselAdapter(context, carouselItems, new ImpressionTracker() {
+                private int lastPosition = RecyclerView.NO_POSITION;
+                @Override
+                public void onImpression(int position, boolean completelyVisibleItem) {
+                    // Handle the impression count logic here
+                    if (lastPosition == RecyclerView.NO_POSITION) {
+                        Log.d("ImpressionTracker", "First Time Impression for a position : " + position);
+                        lastPosition = position;
+                    }
+                    else if (!completelyVisibleItem && position == lastPosition - 1) {
+                        // No Op
+                    }
+                    else if (position != lastPosition) {
+                        Log.d("ImpressionTracker", "Impression for new position: " + position);
+                        lastPosition = position;
+                    }
+                }
+            });
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
@@ -88,8 +107,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        handleImpressions();
+                    }
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    handleImpressions();
+                }
+
+                private void handleImpressions() {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    if (layoutManager != null) {
+                        int activePosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+                        if (activePosition == RecyclerView.NO_POSITION) {
+                            activePosition = layoutManager.findFirstVisibleItemPosition();
+                        }
+                        adapter.getImpressionTracker().onImpression(activePosition, layoutManager.findFirstCompletelyVisibleItemPosition() != RecyclerView.NO_POSITION);
+                    }
+                }
+            });
+
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    recyclerView.invalidateItemDecorations();
+                    //recyclerView.invalidateItemDecorations();
                 }
             });
         }
